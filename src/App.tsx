@@ -10,24 +10,26 @@ import { createContext, useState } from "react";
 
 
 export type ContextState = {
-getTotalItems:(items:CartItemType[])=>void;
-handleRemoveFromCart:(id:number)=>void;
-handleAddToCart:(clickedItem: CartItemType)=>void;
-cartItems:CartItemType[]
+      getTotalItems:(items:CartItemType[])=>void;
+      handleRemoveFromCart:(id:number)=>void;
+      handleAddToCart:(clickedItem: CartItemType)=>void;
+      cartItems:CartItemType[]
 };
 const contextDefaultValues: ContextState = {
-  getTotalItems: ()=>{},
-handleAddToCart:()=>{},
-  handleRemoveFromCart:()=>{},
-  cartItems:[]
+     getTotalItems: ()=>{},
+     handleAddToCart:()=>{},
+     handleRemoveFromCart:()=>{},
+     cartItems:[]
 };
 export const ProductContext = createContext(contextDefaultValues);
 
 
 function App() {
   const [cartItems,setCartItems]= useState([] as CartItemType[])
-const getTotalItems=(items:CartItemType[])=>items.reduce((accumulator:number, item)=>accumulator + item.quantity,0)
- const handleAddToCart = (clickedItem: CartItemType) => {
+  
+  const getTotalItems=(items:CartItemType[])=>items.reduce((accumulator:number, item)=>accumulator + item.quantity,0)
+ 
+   const handleAddToCart = (clickedItem: CartItemType) => {
     setCartItems(prev => {
       // 1. Is the item already added in the cart?
       const isItemInCart = prev.find(item => item.id === clickedItem.id);
@@ -43,9 +45,11 @@ const getTotalItems=(items:CartItemType[])=>items.reduce((accumulator:number, it
       return [...prev, { ...clickedItem, quantity: 1 }];
     });
   };
-const handleRemoveFromCart=(id:number)=>{
 
-setCartItems(prev =>
+
+  const handleRemoveFromCart=(id:number)=>{
+
+   setCartItems(prev =>
       prev.reduce((ack, item) => {
         if (item.id === id) {
           if (item.quantity === 1) return ack;
@@ -55,12 +59,7 @@ setCartItems(prev =>
         }
       }, [] as CartItemType[])
     );
-
-
 }
-
-console.log(cartItems)
-
 
   return (
   <ProductContext.Provider value={{getTotalItems,handleRemoveFromCart,handleAddToCart,cartItems}}>
@@ -72,7 +71,6 @@ console.log(cartItems)
        </Switch>
     </Router>
   </ProductContext.Provider>
-
   );
 }
 
