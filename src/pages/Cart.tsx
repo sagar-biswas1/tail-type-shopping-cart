@@ -1,28 +1,30 @@
 import { useContext } from "react";
+import { ProductContext } from "../App";
 import CartCard from "../components/CartCard";
 import { CartItemType } from "./Home";
 
-import {ProductContext} from './Home'
-// type Props={
-// cartItems:CartItemType[];
-// handleAddToCart:(clickedItem:CartItemType)=>void;
-// removeFromCart:(id:number)=>void
-
-
-// }
 
 function Cart() {
 
 const {cartItems}= useContext(ProductContext)
+console.log(cartItems)
 
 
-  return <div>Your shopping cart
+const calculateTotal = (items: CartItemType[]) =>
+    items.reduce((ack: number, item) => ack + item.quantity * item.price, 0);
+  return <div>
 
-{cartItems?.length&& <p>No items in cart</p>}
+    <div className="text-center text-3xl">
+      Your shopping cart
 
-{cartItems?.map(p=>"hello world")
-}
-<CartCard/>
+{cartItems?.length?  <div>Total : {calculateTotal(cartItems).toFixed(2)}</div> :<p>No items in cart</p>}
+    </div>
+
+
+
+
+{ cartItems.map(item=><CartCard item={item} />) }
+
   </div>;
 }
 

@@ -1,31 +1,40 @@
-import React from 'react'
 
-export default function CartCard() {
+import  { useContext } from 'react'
+import { ProductContext } from '../App';
+import { CartItemType } from '../pages/Home';
+
+type Props={
+     item: CartItemType;
+}
+
+export default function CartCard({item}:Props) {
+
+const {handleRemoveFromCart,handleAddToCart,}= useContext(ProductContext)
+const{title,image,quantity,id}=item
+    
+
+const calculateItemTotal=(item:CartItemType)=>item.price*item.quantity
+
     return (
-        <div>
+        <div >
             
-<div className="content">
-    <div className="flex items-center justify-between w-full my-4 pl-4 sm:pr-4">
-        <div className="mr-6">
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight leading-7 md:leading-10 mb-1 truncate">Manage My Shop</h2>
-          <div className="font-base tracking-tight text-gray-600">Lorem ipsum is placeholder text commonly used in the graphic.</div>
-        </div>
-       
-      </div>
-    <div className="grid mt-8  gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-2">
-        <div className="flex flex-col">
-            <div className="bg-white shadow-md  rounded-3xl p-4">
-                <div className="flex-none lg:flex">
-                    <div className=" h-full w-full lg:h-48 lg:w-48   lg:mb-0 mb-3">
-                        <img src="https://images.unsplash.com/photo-1622180203374-9524a54b734d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1950&amp;q=80"
-                            alt="Just a flower" className=" w-full  object-scale-down lg:object-cover  lg:h-48 rounded-2xl"/>
-                    </div>
-                    <div className="flex-auto ml-3 justify-evenly py-2">
+              <div className="content mx-8">
+     
+                <div className="grid mt-8  gap-8 grid-cols-1 md:grid-cols-1 xl:grid-cols-1 ">
+                  <div className="flex flex-col">
+                     <div className="bg-white shadow-md  rounded-3xl p-4 ">
+                       <div className="flex-none sm:flex">
+                         <div className=" h-full w-full lg:h-48 lg:w-48   lg:mb-0 mb-3">
+                        <img src={image}
+                            alt="Just a flower" className=" w-full h-48 object-scale-down lg:object-cover  lg:h-48 rounded-2xl"
+                            style={{objectFit: "contain"}}
+                            
+                            />
+                         </div>
+                      <div className="flex-auto ml-3 justify-evenly py-2">
                         <div className="flex flex-wrap ">
-                            <div className="w-full flex-none text-xs text-blue-700 font-medium ">
-                                Shop
-                            </div>
-                            <h2 className="flex-auto text-lg font-medium">Massive Dynamic</h2>
+                           
+                            <h2 className="flex-auto text-lg font-medium">{title}</h2>
                         </div>
                         <p className="mt-3"></p>
                         <div className="flex py-4  text-sm text-gray-600">
@@ -38,7 +47,7 @@ export default function CartCard() {
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                 </svg>
-                                <p className="">Cochin,KL</p>
+                                <p className="">price : {calculateItemTotal(item).toFixed(2)}</p>
                             </div>
                             <div className="flex-1 inline-flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none"
@@ -63,22 +72,22 @@ export default function CartCard() {
                                             </path>
                                         </svg>
                                     </span>
-                                    <span>62 Products</span>
+                                    <span>{quantity}</span>
                                 </button>
                             </div>
                             <button
                                 className="mb-2 md:mb-0 bg-gray-900 px-5 py-2 shadow-sm tracking-wider text-white rounded-full hover:bg-gray-800"
-                                type="button" aria-label="like">+</button>
+                                type="button" aria-label="like" onClick={() =>handleAddToCart(item)}>+</button>
                                  <button
                                 className="mb-2 md:mb-0 bg-gray-900 px-5 py-2 shadow-sm tracking-wider text-white rounded-full hover:bg-gray-800"
-                                type="button" aria-label="like">-</button>
+                                type="button" aria-label="like" onClick={() =>handleRemoveFromCart(id)}>-</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
        </div>
-</div>
-        </div>
+       </div>
+ </div>
     )
 }
