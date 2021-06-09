@@ -1,4 +1,4 @@
-import React from 'react';
+
  import {  useQuery } from 'react-query'
 
 import Navbar from './components/Navbar';
@@ -20,7 +20,7 @@ const  getProducts= async ():Promise<CartItemType[]> => await(await  fetch('http
 function App() {
 //const [allProducts,setAllProducts]=useState([])
 
-const { isLoading, error, data } = useQuery <CartItemType[]>('products',getProducts
+const { isLoading, data } = useQuery <CartItemType[]>('products',getProducts
    )
 
  //  const getTotalItems=()=>null
